@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/header.ejs') %>
+
+<body>
+
+ 
+
+    <%- include('../partials/nav.ejs') %>
+
+    <main class="container">
+        <h1>Welcome to my task page</h1>
+
+        <section>
+            <% if(task.length){ %>
+                <% task.forEach((task)=>{%>
+                    <h2> <%= task.name %> </h2>
+                    <p> <%= task.name %> </p>
+                    <h2> <%= task.title %> </h2>
+
+                    <%})%>
+
+        
+            <% }else{ %>
+                <h1>No Tasks To Display Yet</h1>
+                <% } %>
+             
+
+                
+            </section>
+
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum doloremque odio necessitatibus, omnis perferendis, optio repellendus assumenda corrupti nobis eaque dolorem commodi ipsa laudantium saepe dolorum cum earum, aliquam ipsam eos praesentium minus excepturi itaque! Ullam ad molestias cupiditate eveniet repellat doloribus amet officiis, earum, similique, impedit voluptas? Quisquam harum dicta quod eaque ab libero, nulla dolores commodi, consequatur, molestias sapiente eveniet quaerat accusantium qui temporibus illum officia voluptate. Magnam illum nihil velit non architecto soluta praesentium deserunt rerum, ad quia odit, dolorem a? Tenetur vero maiores totam vitae repudiandae nam rerum velit laboriosam voluptate, cum expedita dolore iste debitis?</p>
+    </main>
+
+    <%- include('../partials/footer.ejs') %>
+
+</body>
+</html>
