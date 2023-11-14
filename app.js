@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express();
-const PORT = 7075;
+const port =process.env.PORT || 7075;
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const connect = require('./db/mongoDB')
@@ -11,6 +11,7 @@ const Tasks = require ('./model/taskModel')
 // const mongoDBUrl = process.env.DBURL
 // custom middlewares
 app.set('view engine', 'ejs')
+app.use(express.urlencoded({ extended: true}));
 // app.use((req,res,next)=>{
 //     console.log('new request made');
 //     console.log('host:', req.hostname);
@@ -34,7 +35,11 @@ app.get('/post-tasks',async(req,res)=>{
         console.log(error);
     }
 })
+
+
 // .find() method is a mongoose method for getting all the data from our database
+
+
   
 app.get('/get-posts',async(req,res)=>{
     try{
@@ -67,17 +72,55 @@ app.use(express.static('public'))
 // }
 // )
 
-const task = [
-    {name:"Halimat", title:'halimats clothing', tasks:'client deliveries this morning'},
-    {name:"Chimelu", title:'I.T experience', tasks:'To give my instructor my log book'},
-    {name:"Steve", title:'New House Alert', tasks:'Show client a new house'},
-]
+// const task = [
+//     {name:"Halimat", title:'halimats clothing', tasks:'client deliveries this morning'},
+//     {name:"Chimelu", title:'I.T experience', tasks:'To give my instructor my log book'},
+//     {name:"Steve", title:'New House Alert', tasks:'Show client a new house'},
+// ]
 
-app.get('/',(req,res)=>{
-    res.render('index',{title:'Home || page',task})
+//api
 
+app.post('/api/v1/create',async(req,res)=>{
+    console.log(req.body);
+    const newTask = new Tasks(req.body)
+
+
+try{
+    await newTask.save();
+    res.status(201).redirect('/')
+}catch(error){
+    console.log(error);
 }
-)
+});
+
+app.get('/api/v1/route/:id',async(req,res)=>{
+    const id = req.params.id;
+    
+    console.log(id);
+    try{
+      const result = await Tasks.findById(id)
+       res.status(200).render('singlepage' , {title:'single || page', tasks:result})
+    }catch(error){
+        console.log(error);
+    }
+})
+
+//page routes
+app.get('/',async(req,res)=>{
+//     res.render('index',{title:'Home || page',task})
+
+// }
+// )
+
+try{
+    const result = await Tasks.find();
+    res.render("index",{ title: "Home || Page", tasks:result
+    })
+} catch (error){
+    console.log(error);
+}
+});
+
 
 
 
@@ -96,8 +139,8 @@ app .use((req,res)=>{
 //db connection
 connect()
 .then(()=>{
-    try{app.listen(PORT,()=>{
-        console.log(`server connected to http://localhost:${PORT}`);
+    try{app.listen(port,()=>{
+        console.log(`server connected to http://localhost:${port}`);
     }
     )
 

@@ -12,11 +12,13 @@
         <h1>Welcome to my task page</h1>
 
         <section>
-            <% if(task.length){ %>
-                <% task.forEach((task)=>{%>
-                    <h2> <%= task.name %> </h2>
-                    <p> <%= task.name %> </p>
-                    <h2> <%= task.title %> </h2>
+            <% if(tasks.length){ %>
+                <% tasks.map((tasks)=>{%>
+                    <a href="/api/v1/route/<%- tasks._id  %>">
+                    <h2> <%= tasks.name %> </h2>
+                    <p> <%= tasks.tasks %> </p>
+                    <p> <%- tasks._id %> </p>
+                    </a>
 
                     <%})%>
 

@@ -9,13 +9,13 @@
 
 
     <main class="container">
-        <form action="">
+        <form action="/api/v1/create" method="post"> 
             <label for="name">Name</label>
-            <input type="text" id="name">
-            <label for="title">Title</label>
-            <input type="text" id="title">
+            <input type="text" id="name" name="name"><br><br>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title"> <br> <br>
             <label for="task">Task</label>
-            <textarea name="" id="task" cols="30" rows="10"></textarea>
+            <textarea  id="task" cols="30" rows="10" name="tasks"></textarea> <br><br>
             <button>Submit</button>
 
         </form>
