@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express();
-const port =process.env.PORT || 7075;
+const port =process.env.PORT || 6075;
 const morgan = require('morgan')
+const Tasks = require('./model/taskModel')
 const mongoose = require('mongoose')
 const connect = require('./db/mongoDB')
+const taskRouter = require('./router/taskRouter')
 require('dotenv/config')
-const Tasks = require ('./model/taskModel')
+
 
 
 // const mongoDBUrl = process.env.DBURL
@@ -29,8 +31,8 @@ app.get('/post-tasks',async(req,res)=>{
         tasks:'we just ended using mongo DB'
     })
     try{
-        const newTask = await testData.save();
-        res.status(201).send(newTask)
+        const newTasks = await testData.save();
+        res.status(201).send(newTasks)
     }catch(error){
         console.log(error);
     }
@@ -78,32 +80,11 @@ app.use(express.static('public'))
 //     {name:"Steve", title:'New House Alert', tasks:'Show client a new house'},
 // ]
 
-//api
-
-app.post('/api/v1/create',async(req,res)=>{
-    console.log(req.body);
-    const newTask = new Tasks(req.body)
 
 
-try{
-    await newTask.save();
-    res.status(201).redirect('/')
-}catch(error){
-    console.log(error);
-}
-});
+app.use('/api/v1',taskRouter)
 
-app.get('/api/v1/route/:id',async(req,res)=>{
-    const id = req.params.id;
-    
-    console.log(id);
-    try{
-      const result = await Tasks.findById(id)
-       res.status(200).render('singlepage' , {title:'single || page', tasks:result})
-    }catch(error){
-        console.log(error);
-    }
-})
+
 
 //page routes
 app.get('/',async(req,res)=>{

@@ -11,7 +11,9 @@
         <h2><%- tasks.title  %></h2>  
         <p><%- tasks.tasks  %></p>  
         <div>
-            <button>delete task</button>
+            <button>
+               <a href="/api/v1/delete/<%- tasks._id %>">delete task</a> 
+            </button>
             <button>edit task</button>
         </div>
        </div>
